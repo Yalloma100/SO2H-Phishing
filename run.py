@@ -1,9 +1,55 @@
 import os
-import shutil
 import webbrowser
 import subprocess
 from requests_html import HTMLSession
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin, urlparse
+
+def download_resources(soup, base_url, output_folder):
+    resources = {
+        'css': [],
+        'js': [],
+        'images': []
+    }
+    
+    for link in soup.find_all('link', {'rel': 'stylesheet'}):
+        href = link.get('href')
+        if href:
+            full_url = urljoin(base_url, href)
+            resources['css'].append(full_url)
+            link['href'] = os.path.join('css', os.path.basename(href))
+
+    for script in soup.find_all('script'):
+        src = script.get('src')
+        if src:
+            full_url = urljoin(base_url, src)
+            resources['js'].append(full_url)
+            script['src'] = os.path.join('js', os.path.basename(src))
+
+    for img in soup.find_all('img'):
+        src = img.get('src')
+        if src:
+            full_url = urljoin(base_url, src)
+            resources['images'].append(full_url)
+            img['src'] = os.path.join('images', os.path.basename(src))
+    
+    for folder in ['css', 'js', 'images']:
+        os.makedirs(os.path.join(output_folder, folder), exist_ok=True)
+
+    return resources
+
+def download_file(url, folder):
+    try:
+        response = session.get(url)
+        if response.status_code == 200:
+            file_name = os.path.basename(urlparse(url).path)
+            file_path = os.path.join(folder, file_name)
+            with open(file_path, 'wb') as f:
+                f.write(response.content)
+        else:
+            print(f"Failed to download {url}")
+    except Exception as e:
+        print(f"Error downloading {url}: {e}")
 
 def modify_form(soup):
     forms = soup.find_all('form')
@@ -26,7 +72,6 @@ def modify_form(soup):
         form['class'] = form.get('class', []) + ['modified-form']
         for button in form.find_all('button', {'type': 'submit'}):
             button['id'] = 'login-button'
-            button['class'] = button.get('class', []) + ['disabled']
     
     return True, str(soup)
 
@@ -58,6 +103,7 @@ def start_php_server(output_folder):
     webbrowser.open("http://localhost:8000/index.html")
 
 def process_website():
+    global session
     session = HTMLSession()
 
     while True:
@@ -65,6 +111,13 @@ def process_website():
         try:
             response = session.get(url)
             soup = BeautifulSoup(response.text, 'html.parser')
+
+            resources = download_resources(soup, url, 'output_site')
+
+            for res_type, urls in resources.items():
+                folder = os.path.join('output_site', res_type)
+                for res_url in urls:
+                    download_file(res_url, folder)
 
             found_form, modified_html = modify_form(soup)
             if not found_form:
