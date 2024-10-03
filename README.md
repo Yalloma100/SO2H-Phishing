@@ -4,6 +4,12 @@ Social To Hack(SO2H) - Designed to automate phishing (data theft), it automatica
 
 !!!This may not work for some sites!!!
 
+Does not work well with:
+Instagram, TikTok and several other sites.
+
+Tested and works well with:
+Facebook, linkedin and with many more sites.
+
 ## Content
 
 - [Dependencies](#Dependencies)
