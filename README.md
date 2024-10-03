@@ -30,6 +30,7 @@ MUST BE INSTALLED:
 2. Run the file: `run.py`.
 
 ```bash
+pip install requests-html beautifulsoup4
 python run.py
 ```
 
