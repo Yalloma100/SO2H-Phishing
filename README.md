@@ -24,5 +24,4 @@ MUST BE INSTALLED:
 2. Run the file: `run.py`.
 
 ```bash
-# Commands
 python run.py
