@@ -2,6 +2,8 @@
 
 Social To Hack(SO2H) - Designed to automate phishing (data theft), it automatically copies login pages from links and uses them for phishing.
 
+!!!This may not work for some sites!!!
+
 ## Content
 
 - [Dependencies](#Dependencies)
