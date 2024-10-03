@@ -6,7 +6,6 @@ Social To Hack(SO2H) - Designed to automate phishing (data theft), it automatica
 
 - [Dependencies](#Dependencies)
 - [Installation](#Installation)
-- [License](#License)
 
 ## Dependencies
 MUST BE INSTALLED:
