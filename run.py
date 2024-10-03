@@ -61,14 +61,14 @@ def process_website():
     session = HTMLSession()
 
     while True:
-        url = input("Введіть URL сайту: ")
+        url = input("Enter the website URL: ")
         try:
             response = session.get(url)
             soup = BeautifulSoup(response.text, 'html.parser')
 
             found_form, modified_html = modify_form(soup)
             if not found_form:
-                print("Форма не знайдена! Будь ласка, введіть іншу URL.")
+                print("Form not found! Please enter a different URL.")
             else:
                 output_folder = 'output_site'
                 if not os.path.exists(output_folder):
@@ -81,7 +81,7 @@ def process_website():
                 start_php_server(output_folder)
                 break
         except Exception as e:
-            print(f"Помилка завантаження сайту: {e}. Спробуйте ще раз.")
+            print(f"Error loading the website: {e}. Please try again.")
 
 if __name__ == '__main__':
     process_website()
