@@ -8,7 +8,7 @@ Does not work well with:
 Instagram, TikTok and several other sites.
 
 Tested and works well with:
-Facebook, linkedin and with many more sites.
+Facebook and with many more sites.
 
 ## Content
 
