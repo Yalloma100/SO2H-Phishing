@@ -18,8 +18,6 @@ MUST BE INSTALLED:
 
 ## Installation
 
-Покрокова інструкція з встановлення вашого проекту:
-
 1. Download the repository.
 2. Run the file: `run.py`.
 
